@@ -1,0 +1,1752 @@
+{
+  "packages": [
+    {
+      "path": "command-line-arguments",
+      "name": "main",
+      "types": [
+        {
+          "name": "Person",
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "Age",
+              "type": "int"
+            }
+          ],
+          "methods": [
+            "Greet",
+            "HaveBirthday"
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "testGoroutines",
+          "signature": {
+            "params": [],
+            "results": [],
+            "variadic": false
+          },
+          "body": {
+            "blocks": [
+              {
+                "id": 0,
+                "instructions": [
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t0",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t0",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t1",
+                    "comment": "\u0026t0[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"\\n--- Test 2: Goro...\":string"
+                    ],
+                    "type": "any",
+                    "result": "t2",
+                    "comment": "make any \u003c- string (\"\\n--- Test 2: Goro...\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t1",
+                      "t2"
+                    ],
+                    "comment": "*t1 = t2"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t0"
+                    ],
+                    "type": "[]any",
+                    "result": "t3",
+                    "comment": "slice t0[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t3"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t4",
+                    "comment": "fmt.Println(t3...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*chan string",
+                    "result": "t5",
+                    "comment": "new chan string (ch)"
+                  },
+                  {
+                    "op": "MakeChan",
+                    "args": [
+                      "3:int"
+                    ],
+                    "type": "chan string",
+                    "result": "t6",
+                    "comment": "make chan string 3:int"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t5",
+                      "t6"
+                    ],
+                    "comment": "*t5 = t6"
+                  },
+                  {
+                    "op": "MakeClosure",
+                    "args": [
+                      "testGoroutines$1",
+                      "t5"
+                    ],
+                    "type": "func()",
+                    "result": "t7",
+                    "comment": "make closure testGoroutines$1 [t5]"
+                  },
+                  {
+                    "op": "Go",
+                    "args": [
+                      "t7"
+                    ],
+                    "comment": "go t7()"
+                  },
+                  {
+                    "op": "MakeClosure",
+                    "args": [
+                      "testGoroutines$2",
+                      "t5"
+                    ],
+                    "type": "func()",
+                    "result": "t8",
+                    "comment": "make closure testGoroutines$2 [t5]"
+                  },
+                  {
+                    "op": "Go",
+                    "args": [
+                      "t8"
+                    ],
+                    "comment": "go t8()"
+                  },
+                  {
+                    "op": "MakeClosure",
+                    "args": [
+                      "testGoroutines$3",
+                      "t5"
+                    ],
+                    "type": "func()",
+                    "result": "t9",
+                    "comment": "make closure testGoroutines$3 [t5]"
+                  },
+                  {
+                    "op": "Go",
+                    "args": [
+                      "t9"
+                    ],
+                    "comment": "go t9()"
+                  },
+                  {
+                    "op": "Jump",
+                    "comment": "jump 1"
+                  }
+                ],
+                "successors": [
+                  1
+                ]
+              },
+              {
+                "id": 1,
+                "instructions": [
+                  {
+                    "op": "Phi",
+                    "args": [
+                      "0:int",
+                      "t21"
+                    ],
+                    "type": "int",
+                    "result": "t10",
+                    "comment": "phi [0: 0:int, 2: t21] #i"
+                  },
+                  {
+                    "op": "BinOp",
+                    "args": [
+                      "t10",
+                      "3:int"
+                    ],
+                    "type": "bool",
+                    "result": "t11",
+                    "comment": "t10 \u003c 3:int"
+                  },
+                  {
+                    "op": "If",
+                    "args": [
+                      "t11"
+                    ],
+                    "comment": "if t11 goto 2 else 3"
+                  }
+                ],
+                "successors": [
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 2,
+                "instructions": [
+                  {
+                    "op": "UnOp",
+                    "args": [
+                      "t5"
+                    ],
+                    "type": "chan string",
+                    "result": "t12",
+                    "comment": "*t5"
+                  },
+                  {
+                    "op": "UnOp",
+                    "args": [
+                      "t12"
+                    ],
+                    "type": "string",
+                    "result": "t13",
+                    "comment": "\u003c-t12"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[2]any",
+                    "result": "t14",
+                    "comment": "new [2]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t14",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t15",
+                    "comment": "\u0026t14[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"Received:\":string"
+                    ],
+                    "type": "any",
+                    "result": "t16",
+                    "comment": "make any \u003c- string (\"Received:\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t15",
+                      "t16"
+                    ],
+                    "comment": "*t15 = t16"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t14",
+                      "1:int"
+                    ],
+                    "type": "*any",
+                    "result": "t17",
+                    "comment": "\u0026t14[1:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "t13"
+                    ],
+                    "type": "any",
+                    "result": "t18",
+                    "comment": "make any \u003c- string (t13)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t17",
+                      "t18"
+                    ],
+                    "comment": "*t17 = t18"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t14"
+                    ],
+                    "type": "[]any",
+                    "result": "t19",
+                    "comment": "slice t14[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t19"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t20",
+                    "comment": "fmt.Println(t19...)"
+                  },
+                  {
+                    "op": "BinOp",
+                    "args": [
+                      "t10",
+                      "1:int"
+                    ],
+                    "type": "int",
+                    "result": "t21",
+                    "comment": "t10 + 1:int"
+                  },
+                  {
+                    "op": "Jump",
+                    "comment": "jump 1"
+                  }
+                ],
+                "successors": [
+                  1
+                ]
+              },
+              {
+                "id": 3,
+                "instructions": [
+                  {
+                    "op": "Return",
+                    "comment": "return"
+                  }
+                ],
+                "successors": []
+              }
+            ],
+            "locals": [
+              {
+                "name": "t0",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t5",
+                "type": "*chan string"
+              },
+              {
+                "name": "t14",
+                "type": "*[2]any"
+              }
+            ],
+            "free_vars": [],
+            "struct_hints": {
+              "for_4598675": {
+                "kind": "for",
+                "lines": [
+                  4598675
+                ]
+              }
+            },
+            "defers": []
+          },
+          "is_method": false,
+          "package": "command-line-arguments"
+        },
+        {
+          "name": "testStructs",
+          "signature": {
+            "params": [],
+            "results": [],
+            "variadic": false
+          },
+          "body": {
+            "blocks": [
+              {
+                "id": 0,
+                "instructions": [
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t0",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t0",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t1",
+                    "comment": "\u0026t0[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"\\n--- Test 5: Stru...\":string"
+                    ],
+                    "type": "any",
+                    "result": "t2",
+                    "comment": "make any \u003c- string (\"\\n--- Test 5: Stru...\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t1",
+                      "t2"
+                    ],
+                    "comment": "*t1 = t2"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t0"
+                    ],
+                    "type": "[]any",
+                    "result": "t3",
+                    "comment": "slice t0[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t3"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t4",
+                    "comment": "fmt.Println(t3...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*command-line-arguments.Person",
+                    "result": "t5",
+                    "comment": "new Person (person)"
+                  },
+                  {
+                    "op": "FieldAddr",
+                    "args": [
+                      "t5"
+                    ],
+                    "type": "*string",
+                    "result": "t6",
+                    "comment": "\u0026t5.Name [#0]"
+                  },
+                  {
+                    "op": "FieldAddr",
+                    "args": [
+                      "t5"
+                    ],
+                    "type": "*int",
+                    "result": "t7",
+                    "comment": "\u0026t5.Age [#1]"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t6",
+                      "\"Alice\":string"
+                    ],
+                    "comment": "*t6 = \"Alice\":string"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t7",
+                      "25:int"
+                    ],
+                    "comment": "*t7 = 25:int"
+                  },
+                  {
+                    "op": "UnOp",
+                    "args": [
+                      "t5"
+                    ],
+                    "type": "command-line-arguments.Person",
+                    "result": "t8",
+                    "comment": "*t5"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Greet",
+                      "t8"
+                    ],
+                    "type": "()",
+                    "result": "t9",
+                    "comment": "(Person).Greet(t8)"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "HaveBirthday",
+                      "t5"
+                    ],
+                    "type": "()",
+                    "result": "t10",
+                    "comment": "(*Person).HaveBirthday(t5)"
+                  },
+                  {
+                    "op": "UnOp",
+                    "args": [
+                      "t5"
+                    ],
+                    "type": "command-line-arguments.Person",
+                    "result": "t11",
+                    "comment": "*t5"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Greet",
+                      "t11"
+                    ],
+                    "type": "()",
+                    "result": "t12",
+                    "comment": "(Person).Greet(t11)"
+                  },
+                  {
+                    "op": "Return",
+                    "comment": "return"
+                  }
+                ],
+                "successors": []
+              }
+            ],
+            "locals": [
+              {
+                "name": "t0",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t5",
+                "type": "*command-line-arguments.Person"
+              }
+            ],
+            "free_vars": [],
+            "struct_hints": {},
+            "defers": []
+          },
+          "is_method": false,
+          "package": "command-line-arguments"
+        },
+        {
+          "name": "init",
+          "signature": {
+            "params": [],
+            "results": [],
+            "variadic": false
+          },
+          "body": {
+            "blocks": [
+              {
+                "id": 0,
+                "instructions": [
+                  {
+                    "op": "UnOp",
+                    "args": [
+                      "init$guard"
+                    ],
+                    "type": "bool",
+                    "result": "t0",
+                    "comment": "*init$guard"
+                  },
+                  {
+                    "op": "If",
+                    "args": [
+                      "t0"
+                    ],
+                    "comment": "if t0 goto 2 else 1"
+                  }
+                ],
+                "successors": [
+                  2,
+                  1
+                ]
+              },
+              {
+                "id": 1,
+                "instructions": [
+                  {
+                    "op": "Store",
+                    "args": [
+                      "init$guard",
+                      "true:bool"
+                    ],
+                    "comment": "*init$guard = true:bool"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "init"
+                    ],
+                    "type": "()",
+                    "result": "t1",
+                    "comment": "fmt.init()"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "init"
+                    ],
+                    "type": "()",
+                    "result": "t2",
+                    "comment": "sync.init()"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "init"
+                    ],
+                    "type": "()",
+                    "result": "t3",
+                    "comment": "time.init()"
+                  },
+                  {
+                    "op": "Jump",
+                    "comment": "jump 2"
+                  }
+                ],
+                "successors": [
+                  2
+                ]
+              },
+              {
+                "id": 2,
+                "instructions": [
+                  {
+                    "op": "Return",
+                    "comment": "return"
+                  }
+                ],
+                "successors": []
+              }
+            ],
+            "locals": [],
+            "free_vars": [],
+            "struct_hints": {},
+            "defers": []
+          },
+          "is_method": false,
+          "package": "command-line-arguments"
+        },
+        {
+          "name": "testWaitGroup",
+          "signature": {
+            "params": [],
+            "results": [],
+            "variadic": false
+          },
+          "body": {
+            "blocks": [
+              {
+                "id": 0,
+                "instructions": [
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t0",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t0",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t1",
+                    "comment": "\u0026t0[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"\\n--- Test 3: Wait...\":string"
+                    ],
+                    "type": "any",
+                    "result": "t2",
+                    "comment": "make any \u003c- string (\"\\n--- Test 3: Wait...\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t1",
+                      "t2"
+                    ],
+                    "comment": "*t1 = t2"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t0"
+                    ],
+                    "type": "[]any",
+                    "result": "t3",
+                    "comment": "slice t0[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t3"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t4",
+                    "comment": "fmt.Println(t3...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*sync.WaitGroup",
+                    "result": "t5",
+                    "comment": "new sync.WaitGroup (wg)"
+                  },
+                  {
+                    "op": "Jump",
+                    "comment": "jump 1"
+                  }
+                ],
+                "successors": [
+                  1
+                ]
+              },
+              {
+                "id": 1,
+                "instructions": [
+                  {
+                    "op": "Phi",
+                    "args": [
+                      "1:int",
+                      "t10"
+                    ],
+                    "type": "int",
+                    "result": "t6",
+                    "comment": "phi [0: 1:int, 2: t10] #i"
+                  },
+                  {
+                    "op": "BinOp",
+                    "args": [
+                      "t6",
+                      "3:int"
+                    ],
+                    "type": "bool",
+                    "result": "t7",
+                    "comment": "t6 \u003c= 3:int"
+                  },
+                  {
+                    "op": "If",
+                    "args": [
+                      "t7"
+                    ],
+                    "comment": "if t7 goto 2 else 3"
+                  }
+                ],
+                "successors": [
+                  2,
+                  3
+                ]
+              },
+              {
+                "id": 2,
+                "instructions": [
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Add",
+                      "t5",
+                      "1:int"
+                    ],
+                    "type": "()",
+                    "result": "t8",
+                    "comment": "(*sync.WaitGroup).Add(t5, 1:int)"
+                  },
+                  {
+                    "op": "MakeClosure",
+                    "args": [
+                      "testWaitGroup$1",
+                      "t5"
+                    ],
+                    "type": "func(id int)",
+                    "result": "t9",
+                    "comment": "make closure testWaitGroup$1 [t5]"
+                  },
+                  {
+                    "op": "Go",
+                    "args": [
+                      "t9",
+                      "t6"
+                    ],
+                    "comment": "go t9(t6)"
+                  },
+                  {
+                    "op": "BinOp",
+                    "args": [
+                      "t6",
+                      "1:int"
+                    ],
+                    "type": "int",
+                    "result": "t10",
+                    "comment": "t6 + 1:int"
+                  },
+                  {
+                    "op": "Jump",
+                    "comment": "jump 1"
+                  }
+                ],
+                "successors": [
+                  1
+                ]
+              },
+              {
+                "id": 3,
+                "instructions": [
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Wait",
+                      "t5"
+                    ],
+                    "type": "()",
+                    "result": "t11",
+                    "comment": "(*sync.WaitGroup).Wait(t5)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t12",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t12",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t13",
+                    "comment": "\u0026t12[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"All workers compl...\":string"
+                    ],
+                    "type": "any",
+                    "result": "t14",
+                    "comment": "make any \u003c- string (\"All workers compl...\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t13",
+                      "t14"
+                    ],
+                    "comment": "*t13 = t14"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t12"
+                    ],
+                    "type": "[]any",
+                    "result": "t15",
+                    "comment": "slice t12[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t15"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t16",
+                    "comment": "fmt.Println(t15...)"
+                  },
+                  {
+                    "op": "Return",
+                    "comment": "return"
+                  }
+                ],
+                "successors": []
+              }
+            ],
+            "locals": [
+              {
+                "name": "t0",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t5",
+                "type": "*sync.WaitGroup"
+              },
+              {
+                "name": "t12",
+                "type": "*[1]any"
+              }
+            ],
+            "free_vars": [],
+            "struct_hints": {
+              "defer_4598908": {
+                "kind": "defer",
+                "lines": [
+                  4598908
+                ]
+              },
+              "for_4598847": {
+                "kind": "for",
+                "lines": [
+                  4598847
+                ]
+              }
+            },
+            "defers": []
+          },
+          "is_method": false,
+          "package": "command-line-arguments"
+        },
+        {
+          "name": "testDefer",
+          "signature": {
+            "params": [],
+            "results": [],
+            "variadic": false
+          },
+          "body": {
+            "blocks": [
+              {
+                "id": 0,
+                "instructions": [
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t0",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t0",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t1",
+                    "comment": "\u0026t0[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"\\n--- Test 4: Defe...\":string"
+                    ],
+                    "type": "any",
+                    "result": "t2",
+                    "comment": "make any \u003c- string (\"\\n--- Test 4: Defe...\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t1",
+                      "t2"
+                    ],
+                    "comment": "*t1 = t2"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t0"
+                    ],
+                    "type": "[]any",
+                    "result": "t3",
+                    "comment": "slice t0[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t3"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t4",
+                    "comment": "fmt.Println(t3...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t5",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t5",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t6",
+                    "comment": "\u0026t5[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"Start\":string"
+                    ],
+                    "type": "any",
+                    "result": "t7",
+                    "comment": "make any \u003c- string (\"Start\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t6",
+                      "t7"
+                    ],
+                    "comment": "*t6 = t7"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t5"
+                    ],
+                    "type": "[]any",
+                    "result": "t8",
+                    "comment": "slice t5[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t8"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t9",
+                    "comment": "fmt.Println(t8...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t10",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t10",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t11",
+                    "comment": "\u0026t10[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"Deferred 1\":string"
+                    ],
+                    "type": "any",
+                    "result": "t12",
+                    "comment": "make any \u003c- string (\"Deferred 1\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t11",
+                      "t12"
+                    ],
+                    "comment": "*t11 = t12"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t10"
+                    ],
+                    "type": "[]any",
+                    "result": "t13",
+                    "comment": "slice t10[:]"
+                  },
+                  {
+                    "op": "Defer",
+                    "args": [
+                      "Println",
+                      "t13"
+                    ],
+                    "comment": "defer fmt.Println(t13...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t14",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t14",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t15",
+                    "comment": "\u0026t14[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"Deferred 2\":string"
+                    ],
+                    "type": "any",
+                    "result": "t16",
+                    "comment": "make any \u003c- string (\"Deferred 2\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t15",
+                      "t16"
+                    ],
+                    "comment": "*t15 = t16"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t14"
+                    ],
+                    "type": "[]any",
+                    "result": "t17",
+                    "comment": "slice t14[:]"
+                  },
+                  {
+                    "op": "Defer",
+                    "args": [
+                      "Println",
+                      "t17"
+                    ],
+                    "comment": "defer fmt.Println(t17...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t18",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t18",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t19",
+                    "comment": "\u0026t18[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"Deferred 3\":string"
+                    ],
+                    "type": "any",
+                    "result": "t20",
+                    "comment": "make any \u003c- string (\"Deferred 3\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t19",
+                      "t20"
+                    ],
+                    "comment": "*t19 = t20"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t18"
+                    ],
+                    "type": "[]any",
+                    "result": "t21",
+                    "comment": "slice t18[:]"
+                  },
+                  {
+                    "op": "Defer",
+                    "args": [
+                      "Println",
+                      "t21"
+                    ],
+                    "comment": "defer fmt.Println(t21...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t22",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t22",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t23",
+                    "comment": "\u0026t22[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"End\":string"
+                    ],
+                    "type": "any",
+                    "result": "t24",
+                    "comment": "make any \u003c- string (\"End\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t23",
+                      "t24"
+                    ],
+                    "comment": "*t23 = t24"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t22"
+                    ],
+                    "type": "[]any",
+                    "result": "t25",
+                    "comment": "slice t22[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t25"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t26",
+                    "comment": "fmt.Println(t25...)"
+                  },
+                  {
+                    "op": "RunDefers",
+                    "comment": "rundefers"
+                  },
+                  {
+                    "op": "Return",
+                    "comment": "return"
+                  }
+                ],
+                "successors": []
+              },
+              {
+                "id": 1,
+                "instructions": [
+                  {
+                    "op": "Return",
+                    "comment": "return"
+                  }
+                ],
+                "successors": []
+              }
+            ],
+            "locals": [
+              {
+                "name": "t0",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t5",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t10",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t14",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t18",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t22",
+                "type": "*[1]any"
+              }
+            ],
+            "free_vars": [],
+            "struct_hints": {
+              "defer_4599190": {
+                "kind": "defer",
+                "lines": [
+                  4599190
+                ]
+              },
+              "defer_4599223": {
+                "kind": "defer",
+                "lines": [
+                  4599223
+                ]
+              },
+              "defer_4599256": {
+                "kind": "defer",
+                "lines": [
+                  4599256
+                ]
+              }
+            },
+            "defers": [
+              {
+                "block_id": 0,
+                "call": "defer fmt.Println(t13...)"
+              },
+              {
+                "block_id": 0,
+                "call": "defer fmt.Println(t17...)"
+              },
+              {
+                "block_id": 0,
+                "call": "defer fmt.Println(t21...)"
+              }
+            ]
+          },
+          "is_method": false,
+          "package": "command-line-arguments"
+        },
+        {
+          "name": "main",
+          "signature": {
+            "params": [],
+            "results": [],
+            "variadic": false
+          },
+          "body": {
+            "blocks": [
+              {
+                "id": 0,
+                "instructions": [
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t0",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t0",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t1",
+                    "comment": "\u0026t0[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"=== GONIM Test Su...\":string"
+                    ],
+                    "type": "any",
+                    "result": "t2",
+                    "comment": "make any \u003c- string (\"=== GONIM Test Su...\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t1",
+                      "t2"
+                    ],
+                    "comment": "*t1 = t2"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t0"
+                    ],
+                    "type": "[]any",
+                    "result": "t3",
+                    "comment": "slice t0[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t3"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t4",
+                    "comment": "fmt.Println(t3...)"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "testBasicPrint"
+                    ],
+                    "type": "()",
+                    "result": "t5",
+                    "comment": "testBasicPrint()"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "testGoroutines"
+                    ],
+                    "type": "()",
+                    "result": "t6",
+                    "comment": "testGoroutines()"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "testWaitGroup"
+                    ],
+                    "type": "()",
+                    "result": "t7",
+                    "comment": "testWaitGroup()"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "testDefer"
+                    ],
+                    "type": "()",
+                    "result": "t8",
+                    "comment": "testDefer()"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "testStructs"
+                    ],
+                    "type": "()",
+                    "result": "t9",
+                    "comment": "testStructs()"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t10",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t10",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t11",
+                    "comment": "\u0026t10[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"\\n=== All Tests Pa...\":string"
+                    ],
+                    "type": "any",
+                    "result": "t12",
+                    "comment": "make any \u003c- string (\"\\n=== All Tests Pa...\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t11",
+                      "t12"
+                    ],
+                    "comment": "*t11 = t12"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t10"
+                    ],
+                    "type": "[]any",
+                    "result": "t13",
+                    "comment": "slice t10[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t13"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t14",
+                    "comment": "fmt.Println(t13...)"
+                  },
+                  {
+                    "op": "Return",
+                    "comment": "return"
+                  }
+                ],
+                "successors": []
+              }
+            ],
+            "locals": [
+              {
+                "name": "t0",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t10",
+                "type": "*[1]any"
+              }
+            ],
+            "free_vars": [],
+            "struct_hints": {},
+            "defers": []
+          },
+          "is_method": false,
+          "package": "command-line-arguments"
+        },
+        {
+          "name": "testBasicPrint",
+          "signature": {
+            "params": [],
+            "results": [],
+            "variadic": false
+          },
+          "body": {
+            "blocks": [
+              {
+                "id": 0,
+                "instructions": [
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t0",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t0",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t1",
+                    "comment": "\u0026t0[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"\\n--- Test 1: Basi...\":string"
+                    ],
+                    "type": "any",
+                    "result": "t2",
+                    "comment": "make any \u003c- string (\"\\n--- Test 1: Basi...\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t1",
+                      "t2"
+                    ],
+                    "comment": "*t1 = t2"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t0"
+                    ],
+                    "type": "[]any",
+                    "result": "t3",
+                    "comment": "slice t0[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Println",
+                      "t3"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t4",
+                    "comment": "fmt.Println(t3...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[1]any",
+                    "result": "t5",
+                    "comment": "new [1]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t5",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t6",
+                    "comment": "\u0026t5[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "3.14159:float64"
+                    ],
+                    "type": "any",
+                    "result": "t7",
+                    "comment": "make any \u003c- float64 (3.14159:float64)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t6",
+                      "t7"
+                    ],
+                    "comment": "*t6 = t7"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t5"
+                    ],
+                    "type": "[]any",
+                    "result": "t8",
+                    "comment": "slice t5[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Printf",
+                      "\"Hello from GONIM!...\":string",
+                      "t8"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t9",
+                    "comment": "fmt.Printf(\"Hello from GONIM!...\":string, t8...)"
+                  },
+                  {
+                    "op": "Alloc",
+                    "type": "*[2]any",
+                    "result": "t10",
+                    "comment": "new [2]any (varargs)"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t10",
+                      "0:int"
+                    ],
+                    "type": "*any",
+                    "result": "t11",
+                    "comment": "\u0026t10[0:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "\"Gopher\":string"
+                    ],
+                    "type": "any",
+                    "result": "t12",
+                    "comment": "make any \u003c- string (\"Gopher\":string)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t11",
+                      "t12"
+                    ],
+                    "comment": "*t11 = t12"
+                  },
+                  {
+                    "op": "IndexAddr",
+                    "args": [
+                      "t10",
+                      "1:int"
+                    ],
+                    "type": "*any",
+                    "result": "t13",
+                    "comment": "\u0026t10[1:int]"
+                  },
+                  {
+                    "op": "MakeInterface",
+                    "args": [
+                      "10:int"
+                    ],
+                    "type": "any",
+                    "result": "t14",
+                    "comment": "make any \u003c- int (10:int)"
+                  },
+                  {
+                    "op": "Store",
+                    "args": [
+                      "t13",
+                      "t14"
+                    ],
+                    "comment": "*t13 = t14"
+                  },
+                  {
+                    "op": "Slice",
+                    "args": [
+                      "t10"
+                    ],
+                    "type": "[]any",
+                    "result": "t15",
+                    "comment": "slice t10[:]"
+                  },
+                  {
+                    "op": "Call",
+                    "args": [
+                      "Printf",
+                      "\"Name: %s, Age: %d\\n\":string",
+                      "t15"
+                    ],
+                    "type": "(n int, err error)",
+                    "result": "t16",
+                    "comment": "fmt.Printf(\"Name: %s, Age: %d\\n\":string, t15...)"
+                  },
+                  {
+                    "op": "Return",
+                    "comment": "return"
+                  }
+                ],
+                "successors": []
+              }
+            ],
+            "locals": [
+              {
+                "name": "t0",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t5",
+                "type": "*[1]any"
+              },
+              {
+                "name": "t10",
+                "type": "*[2]any"
+              }
+            ],
+            "free_vars": [],
+            "struct_hints": {},
+            "defers": []
+          },
+          "is_method": false,
+          "package": "command-line-arguments"
+        }
+      ],
+      "globals": [
+        {
+          "name": "init$guard",
+          "type": "*bool"
+        }
+      ],
+      "constants": [],
+      "imports": [
+        "fmt",
+        "sync",
+        "time"
+      ],
+      "cgo_imports": []
+    }
+  ],
+  "main_package": "command-line-arguments"
+}

@@ -1,0 +1,193 @@
+#!/usr/bin/env bash
+
+# GONIM - Go to Nim Transpiler CLI
+VERSION="1.0.0"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+COMPILE_BIN="$SCRIPT_DIR/gonim-compile"
+BACKEND_BIN="$SCRIPT_DIR/gonim-backend"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+show_usage() {
+    cat << USAGE
+GONIM - Go to Nim Transpiler v$VERSION
+
+Usage: gonim [options] <command> [arguments]
+
+Commands:
+    transpile <input>       Transpile Go package to Nim
+    build <input>           Transpile and build executable
+    run <input>             Transpile, build, and run
+    version                 Show version information
+    help                    Show this help message
+
+Options:
+    -o <dir>                Output directory (default: nim_output)
+    -v                      Verbose output
+    --keep-ir               Keep intermediate IR file
+    --optimize              Enable optimizations
+    
+Examples:
+    gonim transpile ./myapp
+    gonim build -o build ./myapp
+    gonim run ./examples/hello
+    
+For more information, visit: https://github.com/gonim/gonim
+USAGE
+}
+
+show_version() {
+    echo "GONIM v$VERSION"
+    echo "Go to Nim Transpiler"
+    echo ""
+    go version
+    nim --version | head -n1
+}
+
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+# Parse options
+OUTPUT_DIR="nim_output"
+VERBOSE=""
+KEEP_IR=""
+OPTIMIZE=""
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -o)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        -v)
+            VERBOSE="-v"
+            shift
+            ;;
+        --keep-ir)
+            KEEP_IR="true"
+            shift
+            ;;
+        --optimize)
+            OPTIMIZE="true"
+            shift
+            ;;
+        transpile|build|run|version|help)
+            COMMAND="$1"
+            shift
+            break
+            ;;
+        *)
+            echo "Unknown option: $1"
+            show_usage
+            exit 1
+            ;;
+    esac
+done
+
+case "$COMMAND" in
+    version)
+        show_version
+        exit 0
+        ;;
+    help|"")
+        show_usage
+        exit 0
+        ;;
+esac
+
+INPUT_PATH="${1:-.}"
+
+if [ ! -e "$INPUT_PATH" ]; then
+    log_error "Input path does not exist: $INPUT_PATH"
+    exit 1
+fi
+
+IR_FILE="$OUTPUT_DIR/ir.json"
+
+transpile() {
+    log_info "Transpiling Go package: $INPUT_PATH"
+    
+    # Step 1: Generate IR
+    log_info "Generating intermediate representation..."
+    if [ -n "$VERBOSE" ]; then
+        "$COMPILE_BIN" -input="$INPUT_PATH" -output="$IR_FILE" -v
+    else
+        "$COMPILE_BIN" -input="$INPUT_PATH" -output="$IR_FILE"
+    fi
+    
+    if [ $? -ne 0 ]; then
+        log_error "Failed to generate IR"
+        exit 1
+    fi
+    log_success "IR generated: $IR_FILE"
+    
+    # Step 2: Generate Nim code
+    log_info "Generating Nim code..."
+    "$BACKEND_BIN" -i "$IR_FILE" -o "$OUTPUT_DIR"
+    
+    if [ $? -ne 0 ]; then
+        log_error "Failed to generate Nim code"
+        exit 1
+    fi
+    log_success "Nim code generated in: $OUTPUT_DIR"
+    
+    # Clean up IR if not keeping
+    if [ -z "$KEEP_IR" ]; then
+        rm -f "$IR_FILE"
+    fi
+}
+
+build_nim() {
+    log_info "Building Nim executable..."
+    
+    cd "$OUTPUT_DIR"
+    
+    NIM_FLAGS="-d:release"
+    if [ -n "$OPTIMIZE" ]; then
+        NIM_FLAGS="$NIM_FLAGS --opt:speed --passC:-O3"
+    fi
+    
+    nim c $NIM_FLAGS main.nim
+    
+    if [ $? -ne 0 ]; then
+        log_error "Failed to build Nim executable"
+        exit 1
+    fi
+    
+    log_success "Executable built: $OUTPUT_DIR/main"
+}
+
+case "$COMMAND" in
+    transpile)
+        transpile
+        ;;
+    build)
+        transpile
+        build_nim
+        ;;
+    run)
+        transpile
+        build_nim
+        log_info "Running executable..."
+        "$OUTPUT_DIR/main"
+        ;;
+esac
