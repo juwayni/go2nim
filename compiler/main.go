@@ -49,7 +49,7 @@ type TypeDef struct {
 
 type FieldDef struct {
 	Name string `json:"name"`
-	Type string `json:"type"`
+	Type string `json:"typ"`
 	Tag  string `json:"tag,omitempty"`
 }
 
